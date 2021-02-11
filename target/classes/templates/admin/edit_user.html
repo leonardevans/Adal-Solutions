@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html
+        lang="en" xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{fragments/admin_main_layout}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Edit User</li>
+    </ol>
+    <section>
+        <div class="row">
+            <div class="table-responsive">
+                <form method="post" th:action="@{/admin/update/user}" th:object="${user}">
+                    <input type="hidden" name="id" class="form-control" th:field="*{id}"/>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <input type="submit" class="btn-primary btn btn-sm" value="Update user"/>
+                            </td>
+                            <td class="d-flex justify-content-end" colspan="2">
+                                <a th:href="@{/admin/users}" class="btn btn-secondary btn-sm">Cancel</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Username</td>
+                            <td th:text="*{username}"></td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td th:text="*{email}"></td>
+                        </tr>
+                        <tr>
+                            <td>Date Created</td>
+                            <td th:text="*{dateCreated}"></td>
+                        </tr>
+                        <tr>
+                            <td>Enabled</td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" name="enabled" class="form-check-input"
+                                           th:field="*{enabled}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Roles</th>
+                            <td>
+                                <div class="form-check" th:each="role : ${allRoles}">
+                                    <input type="checkbox" name="roles"
+
+                                           th:text="${role.name}"
+                                           th:value="${role.id}"
+                                           th:field="*{roles}"
+                                    />
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+
+                    </table>
+                </form>
+
+            </div>
+        </div>
+    </section>
+</div>
+
+</body>
+</html>

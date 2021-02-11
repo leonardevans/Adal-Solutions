@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html
+        lang="en" xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{fragments/admin_main_layout}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Edit post</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <ol class="breadcrumb my-4 ">
+        <li class="breadcrumb-item active">Edit post</li>
+    </ol>
+    <section>
+        <div class="row">
+            <div class="card card-body">
+                <form method="post" enctype="multipart/form-data" th:action="@{/admin/update/post}"  th:object="${post}">
+                    <input type="hidden" name="id" class="form-control" th:field="*{id}"/>
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" th:field="*{title}" class="form-control" required id="title"
+                               aria-describedby="emailHelp">
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('title')}"  th:errors="*{title}"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Post Category</label>
+                        <select th:field="*{postCategory}" required id="category" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <option th:each="category : ${categories}" th:value="${category.id}" th:selected="${category.id== post.getPostCategory().id}" th:text="${category.name}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="defaultCheck1">Publish</label>
+                        <input class="" th:field="*{published}" type="checkbox" value="" checked id="defaultCheck1">
+                        <small id="emailHep"  class="form-text text-danger" th:if="${#fields.hasErrors('published')}" th:errors="*{published}"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Details</label>
+                        <textarea class="form-control" th:id="editor" th:field="*{details}" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <small   class="form-text text-danger" th:if="${#fields.hasErrors('details')}" th:errors="*{details}"></small>
+                    </div>
+                    <div>
+                        <div class="card-header">
+                            <p class="text-info">Uncheck post images to delete</p>
+                            <small   class="form-text text-danger" th:if="${#fields.hasErrors('images')}" th:errors="*{images}"></small>
+                        </div>
+                        <div class="card-body d-flex">
+                            <div class=" p-2 mb-2 col-lg-4 col-md-2" th:each="image : ${post.getImages()}">
+                                <input type="checkbox" name="roles"
+                                       th:value="${image.id}"
+                                       th:field="*{images}"
+                                />
+                                <img th:src="${image.url}" class="img-thumbnail" alt="...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <label>Add post Images</label>
+                        <div class="d-flex" th:object="${imagesRequest}">
+                            <div class="card-body col-lg-4">
+                                <input type="file" th:field="*{file1}" accept="image/*" class="form-control" >
+                                <small  class="form-text text-danger" th:if="${#fields.hasErrors('file1')}" th:errors="*{file1}"></small>
+                            </div>
+                            <div class="card-body col-lg-4">
+                                <input type="file" th:field="*{file2}"  accept="image/*"  class="form-control" >
+                                <small  class="form-text text-danger" th:if="${#fields.hasErrors('file2')}" th:errors="*{file2}"></small>
+                            </div>
+                            <div class="card-body col-lg-4">
+                                <input type="file" th:field="*{file3}" accept="image/*"  class="form-control" >
+                                <small  class="form-text text-danger" th:if="${#fields.hasErrors('file3')}" th:errors="*{file3}"></small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-sm btn-primary">Update post</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+
+<th:block layout:fragment="javascript">
+    <script src="https://cdn.ckeditor.com/ckeditor5/25.0.0/classic/ckeditor.js"></script>
+    <script type="text/javascript">
+        ClassicEditor
+            .create( document.querySelector( '#editor' ) )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+</th:block>
+
+</body>
+</html>

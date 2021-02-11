@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;"
+      lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/main_layout_frontend}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="INTUITIVE, PRODUCT CATEGORIES​">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>PRODUCTS - Adal Solutions</title>
+
+
+    <link rel="stylesheet" th:href="@{/css/nicepage.css}" media="screen">
+    <link rel="stylesheet" th:href="@{/css/PRODUCTS.css}" media="screen">
+    <link rel="stylesheet" th:href="@{/css/product_items.css}" media="screen">
+    <script class="u-script" type="text/javascript" th:src="@{/js/jquery.js}" defer=""></script>
+    <script class="u-script" type="text/javascript" th:src="@{/js/nicepage.js}" defer=""></script>
+
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+
+
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <script type="application/ld+json">{
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "Adal Solutions",
+        "url": "index.html",
+        "logo": "images/default-logo.png",
+        "sameAs": []
+    }</script>
+    <meta property="og:title" content="HOME">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+    <link rel="canonical" href="index.html">
+    <meta property="og:url" content="index.html">
+
+</head>
+<body  class="u-body">
+
+<div layout:fragment="content">
+
+    <section class="u-align-center u-clearfix u-palette-1-light-2 u-section-1" id="sec-6dc0">
+        <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+            <h1 class="u-text u-text-1">OUR PRODUCTS</h1>
+            <select id="selectCategory" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                <option selected value="">Select Category</option>
+                <option th:each="category: ${productCategories}" th:value="${category.id}" th:text="${category.name}">One</option>
+            </select>
+        </div>
+    </section>
+    <section class="u-align-center u-clearfix u-grey-10 u-section-2" id="sec-1c14">
+
+        <div class="container">
+            <div class="row pt-2">
+                <div class="col-md-3 col-sm-6" th:each="product : ${products}">
+                    <div class="product-grid2">
+                        <div class="product-image2">
+                            <a th:href="@{/view/product/{id}(id=${product.id})}" >
+                                <img class="pic-1" th:src="@{${product.getImages()[0].getUrl()}}" th:alt="${product.name}">
+                                <img class="pic-2" th:src="@{${product.getImages()[0].getUrl()}}" th:alt="${product.name}">
+                            </a>
+                            <ul class="social">
+                                <li><a th:href="@{/view/product/{id}(id=${product.id})}" data-tip="Quick View"><i class="fa fa-eye"></i></a></li>
+<!--                                <li><a href="#" data-tip="Add to Wishlist"><i class="fa fa-shopping-bag"></i></a></li>-->
+                                <li><a href="#" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                            <a class="add-to-cart" href="">Add to cart</a>
+                        </div>
+                        <div class="product-content">
+                            <h3 class="title"><a th:href="@{/view/product/{id}(id=${product.id})}" th:text="${product.name}">Women's Designer Top</a></h3>
+                            <h4>Ksh. <span class="price" th:text="${product.price}">599.99</span></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<th:block layout:fragment="javascript">
+    <script type="text/javascript">
+        let select = document.getElementById("selectCategory");
+        select.addEventListener("change", (e)=>{
+            let categoryId = select.value;
+            if (categoryId != null){
+                window.location.href = "/products/" + categoryId;
+            }
+
+        })
+    </script>
+</th:block>
+
+
+</body>
+</html>

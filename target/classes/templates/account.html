@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;"
+      lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/main_layout_frontend.html}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="INTUITIVE, PRODUCT CATEGORIES​">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>MY ACCOUNT - Adal Solutions</title>
+
+
+    <link rel="stylesheet" th:href="@{/css/nicepage.css}" media="screen">
+    <link rel="stylesheet" th:href="@{/css/HOME.css}" media="screen">
+    <script class="u-script" type="text/javascript" th:src="@{/js/jquery.js}" defer=""></script>
+    <script class="u-script" type="text/javascript" th:src="@{/js/nicepage.js}" defer=""></script>
+
+    <link id="u-theme-google-font" rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+            crossorigin="anonymous"></script>
+
+    <script type="application/ld+json">{
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "Adal Solutions",
+        "url": "index.html",
+        "logo": "images/default-logo.png",
+        "sameAs": []
+    }</script>
+    <meta property="og:title" content="HOME">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+    <link rel="canonical" href="index.html">
+    <meta property="og:url" content="index.html">
+
+</head>
+<body data-home-page="HOME.html" data-home-page-title="HOME" class="u-body">
+
+<div layout:fragment="content">
+    <section>
+        <div class="px-4 px-lg-0">
+            <div class="pb-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="card" th:object="${user}">
+                            <div class="card-header bg-warning">
+                                My Account
+                            </div>
+                            <div th:if="${param.password_update_success}">
+                                <div class="alert alert-info">
+                                    Password updated successfully
+                                </div>
+                            </div>
+                            <div th:if="${param.add_address_success}">
+                                <div class="alert alert-info">
+                                    Address added successfully
+                                </div>
+                            </div>
+                            <div th:if="${param.update_address_success}">
+                                <div class="alert alert-info">
+                                    Address updated successfully
+                                </div>
+                            </div>
+                            <div th:if="${param.delete_address_success}">
+                                <div class="alert alert-info">
+                                    Address deleted successfully
+                                </div>
+                            </div>
+                            <div th:if="${param.address_not_found}">
+                                <div class="alert alert-danger">
+                                    Address not found
+                                </div>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Username: <span th:text="*{username}"></span></li>
+                                <li class="list-group-item">Email: <span th:text="*{email}"></span></li>
+                                <li class="list-group-item">Password :
+                                    <a class="" data-bs-toggle="collapse" href="#passwordEdit" role="button"
+                                       aria-expanded="false" aria-controls="collapseExample">
+                                        edit
+                                    </a>
+                                    <div class="collapse" id="passwordEdit">
+                                        <div class="card card-body">
+
+                                            <form th:action="@{/account/update/password}" method="post"
+                                                  th:object="${passwordRequest}">
+
+                                                <div class="row g-3 d-flex">
+                                                    <div class="col-lg-4 form-group">
+                                                        <input type="password" class="form-control"
+                                                               th:field="*{currentPassword}" required
+                                                               placeholder="Current Password">
+                                                        <small class="error text-danger"
+                                                               th:if="${#fields.hasErrors('currentPassword')}"
+                                                               th:errors="*{currentPassword}"></small>
+                                                    </div>
+                                                    <div class="col-lg-4 form-group">
+                                                        <input type="password" class="form-control"
+                                                               th:field="*{newPassword}" required
+                                                               placeholder="New Password">
+                                                        <small class="error text-danger"
+                                                               th:if="${#fields.hasErrors('newPassword')}"
+                                                               th:errors="*{newPassword}"></small>
+                                                    </div>
+                                                    <div class="col-lg-4 form-group">
+                                                        <input type="password" class="form-control"
+                                                               th:field="*{confirmNewPassword}" required
+                                                               placeholder="New Password ( Again )">
+                                                        <small class="error text-danger"
+                                                               th:if="${#fields.hasErrors('confirmNewPassword')}"
+                                                               th:errors="*{confirmNewPassword}"></small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-auto mt-2">
+                                                    <button type="submit" class="btn btn-sm btn-warning">Change
+                                                        Password
+                                                    </button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+
+                                </li>
+
+                                <li class="list-group-item">Shipping Addresses:
+                                    <a class="" data-bs-toggle="collapse" href="#addAddress" role="button"
+                                       aria-expanded="false" aria-controls="collapseExample">
+                                        add
+                                    </a>
+                                    <div class="collapse" id="addAddress">
+                                        <div class="card card-body">
+                                            <div class="row g-3">
+                                                <form th:action="@{/account/add/address}" method="post"
+                                                      th:object="${addressRequest}">
+                                                    <div class="row mb-2">
+                                                        <div class="col-lg-3 form-group">
+                                                            <input type="text" class="form-control" required
+                                                                   placeholder="First Name"
+                                                                   th:field="*{firstName}"
+                                                                   aria-label="First Name">
+                                                            <small class="error text-danger"
+                                                                   th:if="${#fields.hasErrors('firstName')}"
+                                                                   th:errors="*{firstName}"></small>
+                                                        </div>
+                                                        <div class="col-lg-3 form-group">
+                                                            <input type="text" class="form-control" required
+                                                                   placeholder="Last Name"
+                                                                   th:field="*{lastName}"
+                                                                   aria-label="Last Name">
+                                                            <small class="error text-danger"
+                                                                   th:if="${#fields.hasErrors('lastName')}"
+                                                                   th:errors="*{lastName}"></small>
+                                                        </div>
+                                                        <div class="col-lg-3 form-group">
+                                                            <input type="tel" pattern="[0-9]{10,15}"
+                                                                   class="form-control" required
+                                                                   placeholder="Mobile"
+                                                                   th:field="*{mobile}"
+                                                                   aria-label="Mobile">
+                                                            <small class="error text-danger"
+                                                                   th:if="${#fields.hasErrors('mobile')}"
+                                                                   th:errors="*{mobile}"></small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-3 form-group">
+                                                            <input type="text" class="form-control" required
+                                                                   placeholder="Country"
+                                                                   th:field="*{country}"
+                                                                   aria-label="Country" disabled>
+                                                            <small class="error text-danger"
+                                                                   th:if="${#fields.hasErrors('country')}"
+                                                                   th:errors="*{country}"></small>
+                                                        </div>
+                                                        <div class="col-lg-3 form-group">
+                                                            <input type="text" class="form-control" required
+                                                                   placeholder="City"
+                                                                   th:field="*{city}"
+                                                                   aria-label="City">
+                                                            <small class="error text-danger"
+                                                                   th:if="${#fields.hasErrors('city')}"
+                                                                   th:errors="*{city}"></small>
+                                                        </div>
+                                                        <div class="col-lg-3 form-group">
+                                                            <input type="text" class="form-control" required
+                                                                   placeholder="Street"
+                                                                   th:field="*{street}"
+                                                                   aria-label="Street">
+                                                            <small class="error text-danger"
+                                                                   th:if="${#fields.hasErrors('street')}"
+                                                                   th:errors="*{street}"></small>
+                                                        </div>
+                                                        <div class="col-lg-3 form-group">
+                                                            <input type="text" class="form-control" placeholder="House"
+                                                                   th:field="*{house}"
+                                                                   aria-label="House">
+                                                            <small class="error text-danger"
+                                                                   th:if="${#fields.hasErrors('house')}"
+                                                                   th:errors="*{house}"></small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-auto mt-2">
+                                                        <button type="submit" class="btn btn-sm btn-warning">Add
+                                                            Address
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div th:if="${addressToEdit != null}">
+                                        <div class="card card-body">
+                                            <div class="row g-3">
+                                                <form th:action="@{/account/update/address}" method="post"
+                                                      th:object="${addressToEdit}">
+                                                    <input type="hidden" class="form-control"
+                                                           th:field="*{id}">
+                                                    <div class="row mb-2">
+                                                        <div class="col-lg-3 form-group">
+                                                            <input type="text" class="form-control" required
+                                                                   placeholder="First Name"
+                                                                   th:field="*{firstName}"
+                                                                   aria-label="First Name">
+                                                            <small class="error text-danger"
+                                                                   th:if="${#fields.hasErrors('firstName')}"
+                                                                   th:errors="*{firstName}"></small>
+                                                        </div>
+                                                        <div class="col-lg-3 form-group">
+                                                            <input type="text" class="form-control" required
+                                                                   placeholder="Last Name"
+                                                                   th:field="*{lastName}"
+                                                                   aria-label="Last Name">
+                                                            <small class="error text-danger"
+                                                                   th:if="${#fields.hasErrors('lastName')}"
+                                                                   th:errors="*{lastName}"></small>
+                                                        </div>
+                                                        <div class="col-lg-3 form-group">
+                                                            <input type="tel" pattern="[0-9]{10,15}"
+                                                                   class="form-control" required
+                                                                   placeholder="Mobile"
+                                                                   th:field="*{mobile}"
+                                                                   aria-label="Mobile">
+                                                            <small class="error text-danger"
+                                                                   th:if="${#fields.hasErrors('mobile')}"
+                                                                   th:errors="*{mobile}"></small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-3 form-group">
+                                                            <input type="text" class="form-control" required
+                                                                   placeholder="Country"
+                                                                   th:field="*{country}"
+                                                                   aria-label="Country" disabled>
+                                                            <small class="error text-danger"
+                                                                   th:if="${#fields.hasErrors('country')}"
+                                                                   th:errors="*{country}"></small>
+                                                        </div>
+                                                        <div class="col-lg-3 form-group">
+                                                            <input type="text" class="form-control" required
+                                                                   placeholder="City"
+                                                                   th:field="*{city}"
+                                                                   aria-label="City">
+                                                            <small class="error text-danger"
+                                                                   th:if="${#fields.hasErrors('city')}"
+                                                                   th:errors="*{city}"></small>
+                                                        </div>
+                                                        <div class="col-lg-3 form-group">
+                                                            <input type="text" class="form-control" required
+                                                                   placeholder="Street"
+                                                                   th:field="*{street}"
+                                                                   aria-label="Street">
+                                                            <small class="error text-danger"
+                                                                   th:if="${#fields.hasErrors('street')}"
+                                                                   th:errors="*{street}"></small>
+                                                        </div>
+                                                        <div class="col-lg-3 form-group">
+                                                            <input type="text" class="form-control" placeholder="House"
+                                                                   th:field="*{house}"
+                                                                   aria-label="House">
+                                                            <small class="error text-danger"
+                                                                   th:if="${#fields.hasErrors('house')}"
+                                                                   th:errors="*{house}"></small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-auto mt-2">
+                                                        <button type="submit" class="btn btn-sm btn-warning">Update
+                                                            Address
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive" th:if="${!user.getAddresses().isEmpty()}">
+                                        <table class="table table-hover table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">First Name</th>
+                                                <th scope="col">Last Name</th>
+                                                <th scope="col">Mobile</th>
+                                                <th scope="col">Country</th>
+                                                <th scope="col">City</th>
+                                                <th scope="col">Street</th>
+                                                <th scope="col">House</th>
+                                                <th scope="col">Actions</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="address:  ${user.getAddresses()}">
+                                                <td th:text="${address.firstName}"></td>
+                                                <td th:text="${address.lastName}"></td>
+                                                <td th:text="${address.mobile}"></td>
+                                                <td th:text="${address.country}"></td>
+                                                <td th:text="${address.city}"></td>
+                                                <td th:text="${address.street}"></td>
+                                                <td th:text="${address.house}"></td>
+                                                <td class="justify-content-between d-flex">
+                                                    <a th:href="@{/account/edit/address/{id}(id=${address.id})}"><i
+                                                            class="fa fa-pencil text-primary"></i></a>
+                                                    <a th:href="@{/account/delete/address/{id}(id=${address.id})}"><i
+                                                            class="fa fa-trash text-danger"></i></a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+
+
+</body>
+</html>

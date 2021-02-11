@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html
+        lang="en" xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{fragments/admin_main_layout}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Edit product</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <ol class="breadcrumb my-4 ">
+        <li class="breadcrumb-item active">Edit Product</li>
+    </ol>
+    <section>
+        <div class="row">
+            <div class="card card-body">
+                <form method="post" enctype="multipart/form-data" th:action="@{/admin/update/product}"  th:object="${product}">
+                    <input type="hidden" name="id" class="form-control" th:field="*{id}"/>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" th:field="*{name}" class="form-control" required id="name"
+                               aria-describedby="emailHelp">
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}"  th:errors="*{name}"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Product Category</label>
+                        <select th:field="*{productCategory}" required id="category" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <option th:each="category : ${categories}" th:value="${category.id}" th:selected="${category.id == product.productCategory.id}" th:text="${category.name}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price</label>
+                        <input type="number" step="0.01" th:field="*{price}" required class="form-control" id="price"
+                               aria-describedby="emailHelp">
+                        <small id="" class="form-text text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="stock">Stock</label>
+                        <input type="number" th:field="*{stock}" required class="form-control" id="stock"
+                               aria-describedby="emailHelp">
+                        <small id="emailHelp" class="form-text text-danger" th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="published">Publish</label>
+                        <input class="" th:field="*{published}" type="checkbox" value="" id="published">
+                        <small id="emailHeelp"  class="form-text text-danger" th:if="${#fields.hasErrors('published')}" th:errors="*{published}"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Description</label>
+                        <textarea class="form-control" th:id="editor" th:field="*{description}" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <small   class="form-text text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+                    </div>
+                    <div>
+                        <div class="card-header">
+                            <p class="text-info">uncheck product images to delete</p>
+                            <small   class="form-text text-danger" th:if="${#fields.hasErrors('images')}" th:errors="*{images}"></small>
+                        </div>
+                        <div class="card-body d-flex">
+                            <div class=" p-2 mb-2 col-lg-4 col-md-2" th:each="image : ${product.getImages()}">
+                                <input type="checkbox" name="roles"
+                                       th:value="${image.id}"
+                                       th:field="*{images}"
+                                />
+                                <img th:src="${image.url}" class="img-thumbnail" alt="...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <label>Add product Images</label>
+                        <div class="d-flex" th:object="${imagesRequest}">
+                            <div class="card-body col-lg-4">
+                                <input type="file" th:field="*{file1}" accept="image/*" class="form-control" >
+                                <small  class="form-text text-danger" th:if="${#fields.hasErrors('file1')}" th:errors="*{file1}"></small>
+                            </div>
+                            <div class="card-body col-lg-4">
+                                <input type="file" th:field="*{file2}"  accept="image/*"  class="form-control" >
+                                <small  class="form-text text-danger" th:if="${#fields.hasErrors('file2')}" th:errors="*{file2}"></small>
+                            </div>
+                            <div class="card-body col-lg-4">
+                                <input type="file" th:field="*{file3}" accept="image/*"  class="form-control" >
+                                <small  class="form-text text-danger" th:if="${#fields.hasErrors('file3')}" th:errors="*{file3}"></small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-sm btn-primary">Update product</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+
+<th:block layout:fragment="javascript">
+    <script src="https://cdn.ckeditor.com/ckeditor5/25.0.0/classic/ckeditor.js"></script>
+    <script type="text/javascript">
+        ClassicEditor
+            .create( document.querySelector( '#editor' ) )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+</th:block>
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;"
+      lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/main_layout_frontend}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="INTUITIVE, PRODUCT CATEGORIES​">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>SEARCH RESULTS - Adal Solutions</title>
+
+
+    <link rel="stylesheet" th:href="@{/css/nicepage.css}" media="screen">
+    <script class="u-script" type="text/javascript" th:src="@{/js/jquery.js}" defer=""></script>
+    <script class="u-script" type="text/javascript" th:src="@{/js/nicepage.js}" defer=""></script>
+
+    <link id="u-theme-google-font" rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+            crossorigin="anonymous"></script>
+
+    <script type="application/ld+json">{
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "Adal Solutions",
+        "url": "index.html",
+        "logo": "images/default-logo.png",
+        "sameAs": []
+    }</script>
+    <meta property="og:title" content="HOME">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+    <link rel="canonical" href="index.html">
+    <meta property="og:url" content="index.html">
+
+</head>
+<body class="u-body">
+
+<div layout:fragment="content">
+    <section class="u-align-center u-clearfix u-section-1" id="sec-a04e mb-3">
+        <div class="u-clearfix u-sheet u-valign-middle-sm u-valign-top-lg u-valign-top-xl u-sheet-1"><!--product-->
+            <!--product_options_json--><!--{"source":""}--><!--/product_options_json--><!--product_item-->
+            <!-- Page Features -->
+            <div class="row text-center mt-4">
+                <h4 class="bg-primary p-4">Search Results</h4>
+                <div class="col-12" th:if="${posts.size() == 0 && products.size() == 0}">
+                    <h4>
+                        We didn't find any match
+                    </h4>
+                </div>
+                <div class="col-lg-6" th:unless="${products.size() == 0}">
+                    <h5>Products</h5>
+                    <div class="list-group">
+                        <a th:each="product : ${products}" th:href="@{/view/product/{id}(id=${product.id})}"
+                           class="list-group-item list-group-item-action">
+                            <img th:src="@{${product.getImages()[0].getUrl()}}" th:alt="${product.name}"
+                                 class="card-img-top w-25" alt="...">
+                            <span th:text="${product.name}">Dapibus ac facilisis in</span>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="col-lg-6" th:unless="${posts.size() == 0}">
+                    <h5>Blog Posts</h5>
+                    <div class="list-group">
+                        <a th:each="post : ${posts}" th:href="@{/view/post/{id}(id=${post.id})}"
+                           class="list-group-item list-group-item-action">
+                            <img th:src="@{${post.getImages()[0].getUrl()}}" th:alt="${post.title}"
+                                 class="card-img-top w-25">
+                            <span th:text="${post.title}">Dapibus ac facilisis in</span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+    </section>
+
+</div>
+
+<th:block layout:fragment="javascript">
+
+</th:block>
+
+
+</body>
+</html>

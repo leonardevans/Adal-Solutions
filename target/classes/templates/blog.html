@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;"
+      lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/main_layout_frontend}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="INTUITIVE, PRODUCT CATEGORIES​">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>BLOG - Adal Solutions</title>
+
+
+    <link rel="stylesheet" th:href="@{/css/nicepage.css}" media="screen">
+    <link rel="stylesheet" th:href="@{/css/blog.css}" media="screen">
+    <link rel="stylesheet" th:href="@{/css/BLOG.css}" media="screen">
+    <script class="u-script" type="text/javascript" th:src="@{/js/jquery.js}" defer=""></script>
+    <script class="u-script" type="text/javascript" th:src="@{/js/nicepage.js}" defer=""></script>
+
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+
+
+
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+
+    <script type="application/ld+json">{
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "Adal Solutions",
+        "url": "index.html",
+        "logo": "images/default-logo.png",
+        "sameAs": []
+    }</script>
+    <meta property="og:title" content="HOME">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+    <link rel="canonical" href="index.html">
+    <meta property="og:url" content="index.html">
+
+</head>
+<body class="u-body">
+
+<div layout:fragment="content">
+
+    <section class="u-align-left u-clearfix u-palette-1-light-2 u-section-1" id="sec-714d">
+        <div class="u-clearfix u-sheet u-sheet-1">
+            <h1 class="u-align-center u-heading-font u-text u-text-default u-title u-text-1">BLOG</h1>
+            <select class="custom-select" id="selectCategory">
+                <option selected value="">Select Category</option>
+                <option th:each="category: ${postCategories}" th:value="${category.id}" th:text="${category.name}">One</option>
+            </select>
+        </div>
+    </section>
+    <section class="u-align-center u-clearfix u-image u-section-2" id="sec-8f98" data-image-width="1600" data-image-height="1067">
+        <div class="container mx-2">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-2-6" th:each="post : ${posts}">
+                    <article class="card card-style2">
+                        <div class="card-img">
+                            <img class="rounded-top" style="max-width: 350px; max-height: 280px; width: 100%;" th:src="@{${post.getImages()[0].getUrl()}}" th:alt="${post.title}">
+                            <div class="date" >[(${#dates.format(post.datePosted,'dd-MMM-yyyy')})]</div>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="h5"><a th:href="@{/view/post/{id}(id=${post.id})}" th:text="${post.title}">Loft therapy taking care of your home</a></h3>
+                            <!--                        <p class="display-30">Loft therapy will be a thing of the past and here's why.</p>-->
+                            <a th:href="@{/view/post/{id}(id=${post.id})}" class="read-more">read more</a>
+                        </div>
+                        <div class="card-footer">
+                            <ul>
+                                <li><a href="#"><i class="fas fa-user"></i><span th:text="${post.createdBy.username}"></span></a></li>
+                                <li><a th:href="@{/view/post/{id}(id=${post.id})}"><i class="far fa-comment-dots"></i><span th:text="${post.getComments().size()}"></span></a></li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+
+    </section>
+<!--    <section class="u-align-center u-clearfix u-grey-25 u-section-4" id="sec-d8c3">-->
+<!--        <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">-->
+<!--            <h2 class="u-text u-text-1">subscribe TO OUR NEWSLETTER</h2>-->
+<!--            <div class="u-form u-form-1">-->
+<!--                <form action="#" method="POST" class="u-clearfix u-form-horizontal u-form-spacing-15 u-inner-form" style="padding: 15px;" source="custom">-->
+<!--                    <div class="u-form-group u-form-name">-->
+<!--                        <label for="name-ef64" class="u-form-control-hidden u-label">Name</label>-->
+<!--                        <input type="text" placeholder="Name" id="name-ef64" name="name" class="u-border-1 u-border-grey-40 u-input u-input-rectangle u-radius-8" required="">-->
+<!--                    </div>-->
+<!--                    <div class="u-form-email u-form-group">-->
+<!--                        <label for="email-ef64" class="u-form-control-hidden u-label">Email</label>-->
+<!--                        <input type="email" placeholder="Email" id="email-ef64" name="email" class="u-border-1 u-border-grey-40 u-input u-input-rectangle u-radius-8" required="">-->
+<!--                    </div>-->
+<!--                    <div class="u-form-group u-form-submit">-->
+<!--                        <a href="#" class="u-btn u-btn-round u-btn-submit u-button-style u-hover-palette-3-light-2 u-palette-3-dark-1 u-radius-7 u-btn-1">Submit</a>-->
+<!--                        <input type="submit" value="submit" class="u-form-control-hidden">-->
+<!--                    </div>-->
+<!--                    <div class="u-form-send-message u-form-send-success">#FormSendSuccess</div>-->
+<!--                    <div class="u-form-send-error u-form-send-message">#FormSendError</div>-->
+<!--                    <input type="hidden" value="" name="recaptchaResponse">-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+
+</div>
+
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+<th:block layout:fragment="javascript">
+    <script type="text/javascript">
+        let select = document.getElementById("selectCategory");
+        select.addEventListener("change", (e)=>{
+            let categoryId = select.value;
+            if (categoryId != null){
+                window.location.href = "/blog/" + categoryId;
+            }
+
+        })
+    </script>
+</th:block>
+
+</body>
+</html>

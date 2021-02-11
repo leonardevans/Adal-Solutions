@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE"></title>
+    <link th:href="@{/css/admin/styles.css}" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+
+
+    <th:block layout:fragment="head">
+    </th:block>
+
+
+
+</head>
+<body>
+
+<!-- Main Navigation -->
+<!--header.html    -->
+<div th:replace="fragments/admin_header :: admin_header"></div>
+
+<div id="layoutSidenav">
+<!--    sidenav-->
+    <div th:replace="fragments/admin_sidenav :: admin_sidenav"></div>
+
+    <div id="layoutSidenav_content">
+        <!-- Content Section -->
+        <main>
+            <div class="container-fluid" layout:fragment="content">
+
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <div th:replace="fragments/admin_footer :: admin_footer"></div>
+
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+<script th:src="@{/js/admin/scripts.js}"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+<script th:src="@{/js/admin/datatables-demo.js}"></script>
+
+
+<th:block layout:fragment="javascript">
+</th:block>
+
+</body>
+</html>

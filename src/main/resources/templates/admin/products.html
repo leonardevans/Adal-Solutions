@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html
+        lang="en" xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{fragments/admin_main_layout}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Products</li>
+    </ol>
+    <section>
+        <div class="row">
+            <div class=" text-danger" th:if="${param.not_found}">Product not found</div>
+            <div class=" text-success" th:if="${param.delete_success}">Product deleted successfully</div>
+            <div class=" text-danger" th:if="${param.delete_error}">Failed to delete product</div>
+            <div>
+                <a class="btn btn-success btn-sm" th:href="@{/admin/add/product}"
+                        >
+                    Add New
+                </a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover" id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Published</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="product : ${allProducts}">
+                        <td>
+                            <img th:src="@{${product.getImages()[0].getUrl()}}" style="max-width:100px;max-height:50px;" th:alt="${product.getName()}">
+                        </td>
+                        <td th:text="${product.getName()}"></td>
+                        <td th:text="${product.getProductCategory().name}"></td>
+                        <td th:text="${product.getPrice()}"></td>
+                        <td th:text="${product.getStock()}"></td>
+                        <td th:text="${product.isPublished()}"></td>
+                        <td class="d-flex justify-content-between">
+                            <a th:href="@{/admin/view/product/{id} (id= ${product.id})}">
+                                <i class="fa fa-eye text-secondary"></i>
+                            </a>
+                            <a th:href="@{/admin/edit/product/{id} (id= ${product.id})}">
+                                <i class="fa fa-edit text-primary"></i>
+                            </a>
+                            <a th:href="@{/admin/delete/product/{id} (id= ${product.id})}">
+                                <i class="fa fa-trash text-danger"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+
+</body>
+</html>

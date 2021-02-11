@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html
+        lang="en" xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{fragments/admin_main_layout}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Add Product</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <h1 class="mt-4">Products</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Add Product</li>
+    </ol>
+    <section>
+        <div class="row">
+            <div class="card card-body">
+                <form method="post" enctype="multipart/form-data" th:action="@{/admin/add/product}"  th:object="${productRequest}">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name</label>
+                        <input type="text" th:field="*{name}" class="form-control" required id="exampleInputEmail"
+                               aria-describedby="emailHelp">
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}"  th:errors="*{name}"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Product Category</label>
+                        <select th:field="*{categoryId}" required class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Price</label>
+                        <input type="number" step="0.01" th:field="*{price}" required class="form-control" id=""
+                               aria-describedby="emailHelp">
+                        <small id="" class="form-text text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Stock</label>
+                        <input type="number" th:field="*{stock}" required class="form-control" id="exampleInputEmail1"
+                               aria-describedby="emailHelp">
+                        <small id="emailHelp" class="form-text text-danger" th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Publish</label>
+                        <input class="" th:field="*{published}" type="checkbox" value="" checked id="defaultCheck1">
+                        <small id="emailHeelp"  class="form-text text-danger" th:if="${#fields.hasErrors('published')}" th:errors="*{published}"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Description</label>
+                        <textarea class="form-control" th:id="editor" th:field="*{description}" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <small   class="form-text text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Product Images</label>
+                        <div class="input-group com-lg-3">
+                            <input type="file" th:field="*{file1}" accept="image/*" required class="form-control" >
+                            <small  class="form-text text-danger" th:if="${#fields.hasErrors('file1')}" th:errors="*{file1}"></small>
+                        </div>
+                        <div class="input-group com-lg-3">
+                            <input type="file" th:field="*{file2}"  accept="image/*"  class="form-control" >
+                            <small  class="form-text text-danger" th:if="${#fields.hasErrors('file2')}" th:errors="*{file2}"></small>
+                        </div>
+                        <div class="input-group com-lg-3">
+                            <input type="file" th:field="*{file3}" accept="image/*"  class="form-control" >
+                            <small  class="form-text text-danger" th:if="${#fields.hasErrors('file3')}" th:errors="*{file3}"></small>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary">Add product</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+
+<th:block layout:fragment="javascript">
+    <script src="https://cdn.ckeditor.com/ckeditor5/25.0.0/classic/ckeditor.js"></script>
+    <script type="text/javascript">
+        ClassicEditor
+            .create( document.querySelector( '#editor' ) )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+</th:block>
+
+</body>
+</html>

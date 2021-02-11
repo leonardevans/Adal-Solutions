@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html
+        lang="en" xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{fragments/admin_main_layout}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Post Categories</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <h1 class="mt-4">Posts</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Post Categories</li>
+    </ol>
+    <section>
+        <div class="row">
+            <div class="col-12">
+                <p>
+                    <button class="btn btn-success btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample"
+                            aria-expanded="false" aria-controls="collapseExample">
+                        Add New
+                    </button>
+                </p>
+                <div class="collapse" id="collapseExample">
+                    <div  class="card card-body">
+                        <form method="post" th:action="@{/admin/add/post_category}" th:if="${postCategoryRequest != null}" th:object="${postCategoryRequest}">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Name</label>
+                                <input type="text" th:field="*{catName}" class="form-control" id="exampleInputEmail1"
+                                       aria-describedby="emailHelp">
+                                <small id="emailHelp" class="form-text text-danger" th:if="${#fields.hasErrors('catName')}" th:errors="*{catName}"></small>
+                            </div>
+                            <button type="submit" class="btn btn-sm btn-primary">Add</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div  th:if="${postCategory != null}" class="card card-body col-12">
+                <form method="post" th:action="@{/admin/update/post_category}" th:object="${postCategory}">
+                    <div class="form-group">
+                        <input type="hidden" th:field="*{id}" class="form-control" id="exampleInputEmailw"
+                               aria-describedby="emailHelp">
+                        <label for="exampleInputEmail1">Name</label>
+                        <input type="text" th:field="*{name}" class="form-control" id="exampleInputEmail"
+                               aria-describedby="emailHelp">
+                        <small id="emailHelpa" class="form-text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                </form>
+            </div>
+            <div>
+                <p class="password-errors text-success" th:if="${param.add_success}">Post category added successfully</p>
+                <p class="password-errors text-success" th:if="${param.update_success}">Post category updated successfully</p>
+                <p class="password-errors text-success" th:if="${param.delete_success}">Post category deleted successfully</p>
+                <p class="password-errors text-success" th:if="${param.delete_error}">Failed to delete category. Certain post(s) belong to this category</p>
+            </div>
+            <div class="table-responsive col-12" th:if="${allPostCategories != null}">
+                <table class="table table-striped table-hover" id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="postCategory : ${allPostCategories}">
+                        <td th:text="${postCategory.name}">Mask</td>
+                        <td class="d-flex justify-content-between">
+                            <a th:href="@{/admin/edit/post_category/{id} (id= ${postCategory.id})}">
+                                <i class="fa fa-edit text-primary"></i>
+                            </a>
+                            <a th:href="@{/admin/delete/post_category/{id} (id= ${postCategory.id})}">
+                                <i class="fa fa-trash text-danger"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+</main>
+</div>
+
+</body>
+</html>

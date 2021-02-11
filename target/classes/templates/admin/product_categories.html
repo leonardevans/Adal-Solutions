@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html
+        lang="en" xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{fragments/admin_main_layout}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Product Categories</title>
+
+    <th:block layout:fragment="head">
+    </th:block>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <h1 class="mt-4">Product</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Product Categories</li>
+    </ol>
+    <section>
+        <div class="row">
+            <div class="col-12">
+                <p>
+                    <button class="btn btn-success btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample"
+                            aria-expanded="false" aria-controls="collapseExample">
+                        Add New
+                    </button>
+                </p>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                        <form method="post" enctype="multipart/form-data" th:action="@{/admin/add/product_category}" th:if="${productCategoryRequest != null}" th:object="${productCategoryRequest}">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Name</label>
+                                <input type="text" th:field="*{catName}" class="form-control" id="exampleInputEmail1"
+                                       aria-describedby="emailHelp">
+                                <small id="emailHelp" class="form-text text-danger" th:if="${#fields.hasErrors('catName')}" th:errors="*{catName}"></small>
+                            </div>
+                            <div class="form-group">
+                                <label>Product Category image</label>
+                                <div class="input-group">
+                                    <input type="file" th:field="*{image}" accept="image/*" required class="form-control" >
+                                    <small id="emailHelp1" class="form-text text-danger" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></small>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-sm btn-primary">Add</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div  th:if="${productCategoryRequestEdit != null}" class="card card-body col-12">
+                <form method="post" enctype="multipart/form-data" th:action="@{/admin/update/product_category}" th:object="${productCategoryRequestEdit}">
+                    <div class="form-group">
+                        <input type="hidden" th:field="*{id}" class="form-control" id="exampleInputEmailw"
+                               aria-describedby="emailHelp">
+                        <input type="hidden" th:field="*{imageUrl}" class="form-control" id="exampleInputEmailk"
+                               aria-describedby="emailHelp">
+                        <label for="exampleInputEmail1">Name</label>
+                        <input type="text" th:field="*{catName}" class="form-control" id="exampleInputEmail"
+                               aria-describedby="emailHelp">
+                        <small id="emailHelpa" class="form-text text-danger" th:if="${#fields.hasErrors('catName')}" th:errors="*{catName}"></small>
+                    </div>
+                    <div class="form-group">
+                        <img th:src="@{${productCategoryRequestEdit.imageUrl}}"  th:alt="${productCategoryRequestEdit.catName}" style="max-width: 200px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Change product Image</label>
+                        <div class="input-group">
+                            <input type="file" th:field="*{image}" accept="image/*" class="form-control" >
+                            <small id="emailHelp3" class="form-text text-danger" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></small>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                </form>
+            </div>
+            <div>
+                <p class=" text-danger" th:if="${param.add_error}">Product category added successfully</p>
+                <p class=" text-success" th:if="${param.add_success}">Product category added successfully</p>
+                <p class=" text-success" th:if="${param.update_success}">Product category updated successfully</p>
+                <p class=" text-success" th:if="${param.delete_success}">Product category deleted successfully</p>
+                <p class=" text-danger" th:if="${param.delete_error}">Failed to delete category. Certain product(s) belong to this category</p>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover" id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="productCategory : ${allProductCategories}">
+                        <td>
+                            <img th:src="@{${productCategory.getImage().getUrl()}}" style="max-width:100px;max-height:50px;" th:alt="${productCategory.getName()}">
+                        </td>
+                        <td th:text="${productCategory.getName()}"></td>
+                        <td class="d-flex justify-content-between">
+                            <a th:href="@{/admin/edit/product_category/{id} (id= ${productCategory.id})}">
+                                <i class="fa fa-edit text-primary"></i>
+                            </a>
+                            <a th:href="@{/admin/delete/product_category/{id} (id= ${productCategory.id})}">
+                                <i class="fa fa-trash text-danger"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+
+<th:block layout:fragment="javascript">
+
+</th:block>
+
+</body>
+</html>

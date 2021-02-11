@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;"
+      lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/main_layout_frontend}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="INTUITIVE, PRODUCT CATEGORIES​">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title th:text="${post.title}"></title>
+
+
+    <link rel="stylesheet" th:href="@{/css/nicepage.css}" media="screen">
+    <link rel="stylesheet" th:href="@{/css/Post-Template.css}" media="screen">
+    <link rel="stylesheet" th:href="@{/css/comments.css}" media="screen">
+    <script class="u-script" type="text/javascript" th:src="@{/js/jquery.js}" defer=""></script>
+    <script class="u-script" type="text/javascript" th:src="@{/js/nicepage.js}" defer=""></script>
+
+    <link id="u-theme-google-font" rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+            crossorigin="anonymous"></script>
+
+
+    <script type="application/ld+json">{
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "Adal Solutions",
+        "url": "index.html",
+        "logo": "images/default-logo.png",
+        "sameAs": []
+    }</script>
+    <meta property="og:title" content="HOME">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+    <link rel="canonical" href="index.html">
+    <meta property="og:url" content="index.html">
+
+</head>
+<body class="u-body">
+
+<div layout:fragment="content">
+
+    <section class="u-clearfix u-section-1" id="sec-2489" th:with="mainImage=${post.images[0]}">
+        <div class="u-clearfix u-sheet u-sheet-1">
+            <img th:src="@{${mainImage.url}}" th:alt="${post.title}"
+                 class="u-blog-control u-expanded-width u-image u-image-default u-image-1" data-image-width="1080"
+                 data-image-height="1080">
+            <h2 class="u-blog-control u-custom-font u-expanded-width u-heading-font u-text u-text-1"
+                th:text="${post.title}">Post 2 Headline</h2>
+            <div class="u-metadata u-metadata-1">
+                <span class="u-meta-date u-meta-icon">[(${#dates.format(post.datePosted,'dd-MMM-yyyy')})]</span>
+                <span class="u-meta-date u-meta-icon" th:text="${post.createdBy.username}">Jan 23, 2021</span>
+
+            </div>
+            <div class="u-blog-control u-expanded-width-sm u-expanded-width-xl u-expanded-width-xs u-post-content u-text u-text-2">
+                [(${post.details})]
+            </div>
+            <div class="d-flex">
+                <img th:each="image : ${post.images}" th:if="${mainImage} != ${image}" th:src="@{${image.url}}"
+                     class="col-md-4" alt="">
+            </div>
+        </div>
+        <div class="mt-5 mb-5">
+            <div class="d-flex justify-content-center row">
+                <div class="d-flex flex-column col-md-8">
+                    <div class="comment-bottom bg-white p-2 px-4">
+                        <form th:action="@{/view/post/comment}" th:object="${commentRequest}" class="row g-3 card card-body" method="post">
+                            <div class=" mt-4 mb-4">
+                                <p class="password-errors text-success" th:if="${param.comment_posted}">Comment added</p>
+                                <div class="form-group mb-2">
+                                    <input sec:authorize="!isAuthenticated()" th:field="*{username}" type="text"
+                                           required name="username"
+                                           class="form-control mr-3"
+                                           placeholder="User Name">
+                                    <small class="form-text text-danger" th:if="${#fields.hasErrors('username')}"
+                                           th:errors="*{username}"></small>
+                                </div>
+
+                                <div class="form-group mb-2">
+                                    <input type="text" required th:field="*{comment}" name="comment"
+                                           class="form-control mr-3"
+                                           placeholder="Add comment">
+                                    <small class="form-text text-danger" th:if="${#fields.hasErrors('comment')}"
+                                           th:errors="*{comment}"></small>
+                                </div>
+                                <input type="hidden" name="postId" th:field="*{postId}" th:value="${post.id}"
+                                       class="form-control mr-3"
+                                       placeholder="Add comment">
+                                <button class="btn btn-sm btn-primary" type="submit">Comment</button>
+                            </div>
+                        </form>
+
+                        <div class="card mt-2" th:each="comment : ${post.comments}">
+                            <div class="card-header">
+                                <h5 class="mr-2" th:text="${comment.username}"><i class="fa fa-user"></i> Username</h5><span
+                                    class="dot mb-1"></span><span class="mb-1 ml-2">[(${#dates.format(post.datePosted,'dd-MMM-yyyy hh:mm')})]</span>
+                            </div>
+                            <div class="card-body" th:text="${comment.comment}">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>

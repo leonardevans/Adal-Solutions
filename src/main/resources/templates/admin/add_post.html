@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html
+        lang="en" xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{fragments/admin_main_layout}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Add Post</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <ol class="breadcrumb my-4 ">
+        <li class="breadcrumb-item active">Add Post</li>
+    </ol>
+    <section>
+        <div class="row">
+            <div class="card card-body">
+                <form method="post" enctype="multipart/form-data" th:action="@{/admin/add/post}"  th:object="${postRequest}">
+                    <div class="form-group">
+                        <label for="title">Name</label>
+                        <input type="text" th:field="*{title}" class="form-control" required id="title"
+                               aria-describedby="emailHelp">
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('title')}"  th:errors="*{title}"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Post Category</label>
+                        <select th:field="*{categoryId}" id="category" required class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="defaultCheck1">Publish</label>
+                        <input class="" th:field="*{published}" type="checkbox" value="" checked id="defaultCheck1">
+                        <small id="emailHeelp"  class="form-text text-danger" th:if="${#fields.hasErrors('published')}" th:errors="*{published}"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Details</label>
+                        <textarea class="form-control" th:id="editor" th:field="*{description}" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <small   class="form-text text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Post Images</label>
+                        <div class="input-group com-lg-3">
+                            <input type="file" th:field="*{file1}" accept="image/*" required class="form-control" >
+                            <small  class="form-text text-danger" th:if="${#fields.hasErrors('file1')}" th:errors="*{file1}"></small>
+                        </div>
+                        <div class="input-group com-lg-3">
+                            <input type="file" th:field="*{file2}"  accept="image/*"  class="form-control" >
+                            <small  class="form-text text-danger" th:if="${#fields.hasErrors('file2')}" th:errors="*{file2}"></small>
+                        </div>
+                        <div class="input-group com-lg-3">
+                            <input type="file" th:field="*{file3}" accept="image/*"  class="form-control" >
+                            <small  class="form-text text-danger" th:if="${#fields.hasErrors('file3')}" th:errors="*{file3}"></small>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary">Add post</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+
+<th:block layout:fragment="javascript">
+    <script src="https://cdn.ckeditor.com/ckeditor5/25.0.0/classic/ckeditor.js"></script>
+    <script type="text/javascript">
+        ClassicEditor
+            .create( document.querySelector( '#editor' ) )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+</th:block>
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;"
+      lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/main_layout_frontend}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="INTUITIVE, PRODUCT CATEGORIES​">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>PRODUCT - Adal Solutions</title>
+
+
+    <link rel="stylesheet" th:href="@{/css/nicepage.css}" media="screen">
+    <link rel="stylesheet" th:href="@{/css/PRODUCT-1.css}" media="screen">
+    <link rel="stylesheet" th:href="@{/css/product_items.css}" media="screen">
+    <script class="u-script" type="text/javascript" th:src="@{/js/jquery.js}" defer=""></script>
+    <script class="u-script" type="text/javascript" th:src="@{/js/nicepage.js}" defer=""></script>
+
+    <link id="u-theme-google-font" rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+    <script type="application/ld+json">{
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "Adal Solutions",
+        "url": "index.html",
+        "logo": "images/default-logo.png",
+        "sameAs": []
+    }</script>
+    <meta property="og:title" content="HOME">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+    <link rel="canonical" href="index.html">
+    <meta property="og:url" content="index.html">
+
+</head>
+<body class="u-body">
+
+<div layout:fragment="content">
+
+    <div class="super_container">
+        <div class="single_product">
+            <div class="container-fluid" style=" background-color: #fff; padding: 11px;">
+                <div class="row" th:with="mainImage=${product.images[0]}">
+                    <div class="col-lg-2 order-lg-1 order-2">
+                        <ul class="image_list">
+                            <li th:each="image : ${product.getImages()}" th:if="${mainImage} != ${image}" data-image="https://res.cloudinary.com/dxfq3iotg/image/upload/v1565713229/single_4.jpg">
+                                <img th:src="@{${image.url}}"
+                                     th:alt="${product.name}"></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4 order-lg-2 order-1">
+                        <div class="image_selected"><img th:src="@{${mainImage.getUrl()}}" th:alt="${product.name}">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 order-3">
+                        <div class="product_description">
+                            <nav>
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                                    <li class="breadcrumb-item"><a th:href="@{/products}">Products</a></li>
+                                    <li class="breadcrumb-item active" th:text="${product.getProductCategory().name}">Accessories</li>
+                                </ol>
+                            </nav>
+                            <div class="product_name" th:text="${product.name}">Acer Aspire 3 Celeron Dual Core - (2 GB/500 GB HDD/Windows 10
+                                Home) A315-33 Laptop (15.6 inch, Black, 2.1 kg)
+                            </div>
+                            <div class="product_price">Ksh. <span  th:text="${product.price}">₹ 29,000</span> </div>
+
+                            <hr class="singleline">
+                            <div class="product_info">
+                                [(${product.description})]
+                            </div>
+                            <hr class="singleline">
+                            <div class="row">
+                                <div class="col-xs-6" style="margin-left: 13px;">
+                                    <div class="product_quantity"><span>QTY: </span> <input id="quantity_input"
+                                                                                            type="text" pattern="[0-9]*"
+                                                                                            value="1">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <button type="button" class="btn btn-primary shop-button">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-underline" th:if="${relatedProducts.size() >0}">
+                    <div class="col-md-6"><span class=" deal-text">Related Products</span></div>
+                    <div class="col-md-6"><a href="#" data-abc="true"> <span class="ml-auto view-all"></span> </a></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-3 col-sm-6" th:each="relatedProduct : ${relatedProducts}">
+                            <div class="product-grid2">
+                                <div class="product-image2">
+                                    <a th:href="@{/view/product/{id}(id=${relatedProduct.id})}" >
+                                        <img class="pic-1" th:src="@{${relatedProduct.getImages()[0].getUrl()}}" th:alt="${relatedProduct.name}">
+                                        <img class="pic-2" th:src="@{${relatedProduct.getImages()[0].getUrl()}}" th:alt="${relatedProduct.name}">
+                                    </a>
+                                    <ul class="social">
+                                        <li><a th:href="@{/view/product/{id}(id=${relatedProduct.id})}" data-tip="Quick View"><i class="fa fa-eye"></i></a></li>
+                                        <!--                                <li><a href="#" data-tip="Add to Wishlist"><i class="fa fa-shopping-bag"></i></a></li>-->
+                                        <li><a href="#" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
+                                    </ul>
+                                    <a class="add-to-cart" href="">Add to cart</a>
+                                </div>
+                                <div class="product-content">
+                                    <h3 class="title"><a th:href="@{/view/product/{id}(id=${relatedProduct.id})}" th:text="${relatedProduct.name}">Women's Designer Top</a></h3>
+                                    <h4>Ksh. <span class="price" th:text="${relatedProduct.price}">599.99</span></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>
