@@ -11,11 +11,12 @@ import java.util.List;
 
 @Repository
 public interface PostRepository  extends JpaRepository<Post, Integer> {
+    List<Post> findAllByPublished(boolean published);
     boolean existsByPostCategoryId(int id);
     boolean existsByTitle(String title);
     Post findByTitle(String title);
-    List<Post> findAllByPostCategory(PostCategory postCategory);
+    List<Post> findAllByPostCategoryAndPublished(PostCategory postCategory, boolean published);
 
-    @Query("SELECT p FROM Post p INNER JOIN p.postCategory c WHERE CONCAT(p.title, c.name, p.details) LIKE %?1% ")
+    @Query("SELECT p FROM Post p INNER JOIN p.postCategory c WHERE CONCAT(p.title, c.name, p.details) LIKE %?1% AND p.published = true ")
     List<Post> findAllByTitleContainsOrDetailsContainsOrPostCategoryN( String title);
 }

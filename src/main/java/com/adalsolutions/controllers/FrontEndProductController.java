@@ -25,7 +25,7 @@ public class FrontEndProductController {
 
     @GetMapping("/products")
     public String showProducts(Model model){
-        model.addAttribute("products", productRepository.findAll());
+        model.addAttribute("products", productRepository.findAllByPublished(true));
         model.addAttribute("productCategories", productCategoryRepository.findAll());
         return "products";
     }
@@ -37,7 +37,7 @@ public class FrontEndProductController {
             return "redirect:/products";
         }
 
-        List<Product> relatedProducts = productRepository.findAllByProductCategoryId(optionalProduct.get().getProductCategory().getId());
+        List<Product> relatedProducts = productRepository.findAllByProductCategoryIdAndPublished(optionalProduct.get().getProductCategory().getId(), true);
         relatedProducts.remove(optionalProduct.get());
         model.addAttribute("product", optionalProduct.get());
         model.addAttribute("relatedProducts", relatedProducts);
@@ -51,7 +51,7 @@ public class FrontEndProductController {
             return "redirect:/products";
         }
         model.addAttribute("productCategories", productCategoryRepository.findAll());
-        model.addAttribute("products", productRepository.findAllByProductCategoryId(optionalProductCategory.get().getId()));
+        model.addAttribute("products", productRepository.findAllByProductCategoryIdAndPublished(optionalProductCategory.get().getId(), true));
         return "products";
     }
 }

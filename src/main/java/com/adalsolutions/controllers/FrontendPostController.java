@@ -44,7 +44,7 @@ public class FrontendPostController {
     @GetMapping("/blog")
     public String showBlog(Model model){
         model.addAttribute("postCategories", postCategoryRepository.findAll());
-        model.addAttribute("posts", postRepository.findAll());
+        model.addAttribute("posts", postRepository.findAllByPublished(true));
         return "blog";
     }
 
@@ -55,7 +55,7 @@ public class FrontendPostController {
             return "redirect:/blog";
         }
 
-        List<Post> relatedPosts = postRepository.findAllByPostCategory(optionalPost.get().getPostCategory());
+        List<Post> relatedPosts = postRepository.findAllByPostCategoryAndPublished(optionalPost.get().getPostCategory(), true);
         relatedPosts.remove(optionalPost.get());
         model.addAttribute("post", optionalPost.get());
         model.addAttribute("relatedPosts", relatedPosts);
@@ -72,7 +72,7 @@ public class FrontendPostController {
             return "redirect:/blog";
         }
         model.addAttribute("postCategories", postCategoryRepository.findAll());
-        model.addAttribute("posts", postRepository.findAllByPostCategory(optionalPostCategory.get()));
+        model.addAttribute("posts", postRepository.findAllByPostCategoryAndPublished(optionalPostCategory.get(), true));
         return "blog";
     }
 
@@ -83,7 +83,7 @@ public class FrontendPostController {
             return "redirect:/blog";
         }
 
-        List<Post> relatedPosts = postRepository.findAllByPostCategory(optionalPost.get().getPostCategory());
+        List<Post> relatedPosts = postRepository.findAllByPostCategoryAndPublished(optionalPost.get().getPostCategory(), true);
         relatedPosts.remove(optionalPost.get());
         model.addAttribute("post", optionalPost.get());
         model.addAttribute("relatedPosts", relatedPosts);
