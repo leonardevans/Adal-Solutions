@@ -28,10 +28,12 @@
     .u-section-1-1 .u-text-1 {
         font-size: 3.75rem;
     }
-}.u-block-7fc0-2 {
-     position: absolute;
-     bottom: 10px;
- }
+}
+
+.u-block-7fc0-2 {
+    position: absolute;
+    bottom: 10px;
+}
 
 .u-block-7fc0-3 {
     position: absolute;
@@ -43,9 +45,11 @@
     position: absolute;
     right: 0;
     background-image: none;
-}.u-section-2 {
-     background-image: linear-gradient(#77aad9, #425465);
- }
+}
+
+.u-section-2 {
+    background-image: url("../images/photography.png");
+}
 
 .u-section-2 .u-sheet-1 {
     min-height: 671px;
@@ -246,9 +250,11 @@
         margin-right: initial;
         margin-left: initial;
     }
-}.u-section-3 .u-sheet-1 {
-     min-height: 525px;
- }
+}
+
+.u-section-3 .u-sheet-1 {
+    min-height: 525px;
+}
 
 .u-section-3 .u-text-1 {
     width: 696px;
@@ -475,9 +481,11 @@
         height: 40px;
         width: 135px;
     }
-}.u-section-4 {
-     background-image: linear-gradient(#f2f2f2, #999999);
- }
+}
+
+.u-section-4 {
+    background-image: linear-gradient(#f2f2f2, #999999);
+}
 
 .u-section-4 .u-sheet-1 {
     min-height: 589px;

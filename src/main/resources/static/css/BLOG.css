@@ -10,7 +10,7 @@
   margin: 20px auto 60px;
 }.u-section-2 {
    background-image: url("../images/photography.png");
-  background-position: 50% 50%;
+  /*background-position: 50% 50%;*/
 }
 
 .u-section-2 .u-sheet-1 {

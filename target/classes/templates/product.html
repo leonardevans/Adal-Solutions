@@ -76,24 +76,24 @@
                             <div class="product_name" th:text="${product.name}">Acer Aspire 3 Celeron Dual Core - (2 GB/500 GB HDD/Windows 10
                                 Home) A315-33 Laptop (15.6 inch, Black, 2.1 kg)
                             </div>
-                            <div class="product_price">Ksh. <span  th:text="${product.price}">₹ 29,000</span> </div>
+<!--                            <div class="product_price">Ksh. <span  th:text="${product.price}">₹ 29,000</span> </div>-->
 
                             <hr class="singleline">
                             <div class="product_info">
                                 [(${product.description})]
                             </div>
-                            <hr class="singleline">
-                            <div class="row">
-                                <div class="col-xs-6" style="margin-left: 13px;">
-                                    <div class="product_quantity"><span>QTY: </span> <input id="quantity_input"
-                                                                                            type="text" pattern="[0-9]*"
-                                                                                            value="1">
-                                    </div>
-                                </div>
-                                <div class="col-xs-6">
-                                    <button type="button" class="btn btn-primary shop-button">Add to Cart</button>
-                                </div>
-                            </div>
+<!--                            <hr class="singleline">-->
+<!--                            <div class="row">-->
+<!--                                <div class="col-xs-6" style="margin-left: 13px;">-->
+<!--                                    <div class="product_quantity"><span>QTY: </span> <input id="quantity_input"-->
+<!--                                                                                            type="text" pattern="[0-9]*"-->
+<!--                                                                                            value="1">-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="col-xs-6">-->
+<!--                                    <button type="button" class="btn btn-primary shop-button">Add to Cart</button>-->
+<!--                                </div>-->
+<!--                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -113,13 +113,13 @@
                                     <ul class="social">
                                         <li><a th:href="@{/view/product/{id}(id=${relatedProduct.id})}" data-tip="Quick View"><i class="fa fa-eye"></i></a></li>
                                         <!--                                <li><a href="#" data-tip="Add to Wishlist"><i class="fa fa-shopping-bag"></i></a></li>-->
-                                        <li><a href="#" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
+<!--                                        <li><a href="#" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>-->
                                     </ul>
-                                    <a class="add-to-cart" href="">Add to cart</a>
+<!--                                    <a class="add-to-cart" href="">Add to cart</a>-->
                                 </div>
                                 <div class="product-content">
                                     <h3 class="title"><a th:href="@{/view/product/{id}(id=${relatedProduct.id})}" th:text="${relatedProduct.name}">Women's Designer Top</a></h3>
-                                    <h4>Ksh. <span class="price" th:text="${relatedProduct.price}">599.99</span></h4>
+<!--                                    <h4>Ksh. <span class="price" th:text="${relatedProduct.price}">599.99</span></h4>-->
                                 </div>
                             </div>
                         </div>
