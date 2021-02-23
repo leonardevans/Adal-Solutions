@@ -35,6 +35,9 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Testimonial> testimonials = new HashSet<>();
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private ConfirmationToken confirmationToken;
+
     public User() {
     }
 
